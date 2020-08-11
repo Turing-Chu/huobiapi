@@ -5,8 +5,10 @@
 package ginSwagger
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	ginSwagger "github.com/swaggo/gin-swagger"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwag "github.com/swaggo/gin-swagger"
 )
 
 // @title Huobi API
@@ -18,12 +20,12 @@ import (
 // @license.url https://opensource.org/licenses/MIT
 // @host api.testnet.huobi.pro
 // @BasePath /api
-func Run()  {
+func Run() {
 	engine := gin.New()
 	listening := fmt.Sprintf("%s:%d", "127.0.0.1", 8808)
 
-	url := ginSwagger.URL(fmt.Sprintf("http://%s/swagger/doc.json", listening))
-	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	url := ginSwag.URL(fmt.Sprintf("http://%s/swagger/doc.json", listening))
+	engine.GET("/swagger/*any", ginSwag.WrapHandler(swaggerFiles.Handler, url))
 	err := engine.Run(listening)
 	if err != nil {
 		fmt.Println(err)

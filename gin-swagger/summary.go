@@ -19,5 +19,4 @@ import (
 // @success 200 {object} models.Summary
 // @accept json
 // @produce json
-func Summary(ctx *gin.Context) {
-}
+func Summary(ctx *gin.Context) {}

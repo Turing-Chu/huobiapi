@@ -19,5 +19,4 @@ import (
 // @success 200 {object} models.MarketStatus
 // @accept json
 // @produce json
-func MarketStatus(ctx *gin.Context) {
-}
+func MarketStatus(ctx *gin.Context) {}

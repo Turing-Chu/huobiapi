@@ -4,8 +4,6 @@
 
 package main
 
-
-
 import (
 	ginSwagger "github.com/Turing-Chu/huobiapi/gin-swagger"
 )
