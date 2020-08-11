@@ -1,4 +1,4 @@
-module github.com/Turing-Chu/huobiapi
+module huobiapi
 
 go 1.14
 
