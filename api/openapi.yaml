@@ -1,0 +1,83 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: qishiwenjun@163.com
+    name: Turing Zhu
+  description: Huobi API
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  title: Huobi API
+  version: "0.1"
+servers:
+- url: //api.testnet.huobi.pro/api
+paths:
+  /v2/market-status:
+    get:
+      description: 'The enum values of market status includes: 1 - normal (order submission
+        & cancellation are allowed)，'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.MarketStatus'
+          description: OK
+      summary: The endpoint returns current market status
+      tags:
+      - Reference Data
+  /v2/summary.json:
+    get:
+      description: This endpoint allows users to get system status, Incidents and
+        planned maintenance.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.Summary'
+          description: OK
+      summary: Get system status
+      tags:
+      - Reference Data
+components:
+  schemas:
+    models.MarketStatus:
+      example:
+        code: 0
+        data:
+          affectedSymbols: affectedSymbols
+          haltReason: 1
+          haltEndTime: 6
+          marketStatus: 1
+          haltStartTime: 5
+        message: message
+      properties:
+        code:
+          type: integer
+        data:
+          $ref: '#/components/schemas/models_MarketStatus_data'
+        message:
+          type: string
+      type: object
+    models.Summary:
+      type: object
+    models_MarketStatus_data:
+      example:
+        affectedSymbols: affectedSymbols
+        haltReason: 1
+        haltEndTime: 6
+        marketStatus: 1
+        haltStartTime: 5
+      properties:
+        affectedSymbols:
+          type: string
+        haltEndTime:
+          type: integer
+        haltReason:
+          type: integer
+        haltStartTime:
+          type: integer
+        marketStatus:
+          example: 1
+          type: integer
