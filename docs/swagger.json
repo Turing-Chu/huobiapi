@@ -42,6 +42,172 @@
                     }
                 }
             }
+        },
+        "/v2/reference/currencies": {
+            "get": {
+                "description": "API user could query static reference information for each currency, as well as its corresponding chain(s). (Public Endpoint)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reference Data"
+                ],
+                "summary": "Currency \u0026 Chains",
+                "operationId": "CurrencyAndChainsV2",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "btc, ltc, etc ...(available currencies in Huobi Global)",
+                        "name": "currency",
+                        "in": "path"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "true or false (if not filled, default value is true)",
+                        "name": "authorizedUser",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Currency \u0026 Chains list",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/models.Currency"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "chains": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.Chain"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Chain": {
+            "type": "object",
+            "properties": {
+                "baseChain": {
+                    "type": "string"
+                },
+                "baseChainProtocol": {
+                    "type": "string"
+                },
+                "chain": {
+                    "type": "string"
+                },
+                "deposit_status": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "isDynamic": {
+                    "type": "boolean"
+                },
+                "maxTransactFeeWithdraw": {
+                    "type": "number"
+                },
+                "maxWithdrawAmt": {
+                    "type": "number"
+                },
+                "minDepositAmt": {
+                    "type": "number"
+                },
+                "minTransactFeeWithdraw": {
+                    "type": "number"
+                },
+                "minWithdrawAmt": {
+                    "type": "number"
+                },
+                "numOfConfirmations": {
+                    "type": "integer"
+                },
+                "numOfFastConfirmations": {
+                    "type": "integer"
+                },
+                "transactFeeRateWithdraw": {
+                    "type": "number"
+                },
+                "transactFeeWithdraw": {
+                    "type": "number"
+                },
+                "withdrawFeeType": {
+                    "type": "string"
+                },
+                "withdrawPrecision": {
+                    "type": "integer"
+                },
+                "withdrawQuotaPerDay": {
+                    "type": "number"
+                },
+                "withdrawQuotaPerYear": {
+                    "type": "number"
+                },
+                "withdrawQuotaTotal": {
+                    "type": "number"
+                },
+                "withdrawStatus": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Currency": {
+            "type": "object",
+            "properties": {
+                "chains": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Chain"
+                    }
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "instStatus": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
         }
     },
     "securityDefinitions": {

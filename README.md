@@ -32,11 +32,16 @@ All URIs are relative to *https://api.testnet.huobi.pro*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*ReferenceDataApi* | [**CurrencyAndChainsV2**](docs/ReferenceDataApi.md#currencyandchainsv2) | **Get** /v2/reference/currencies | Currency &amp; Chains
 *ReferenceDataApi* | [**TimestampV1**](docs/ReferenceDataApi.md#timestampv1) | **Get** /v1/common/timestamp | Get Current Timestamp
 
 
 ## Documentation For Models
 
+ - [InlineResponse200](docs/InlineResponse200.md)
+ - [ModelsChain](docs/ModelsChain.md)
+ - [ModelsCurrency](docs/ModelsCurrency.md)
+ - [ModelsResponse](docs/ModelsResponse.md)
 
 
 ## Documentation For Authorization

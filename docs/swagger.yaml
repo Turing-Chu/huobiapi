@@ -1,4 +1,70 @@
 basePath: /
+definitions:
+  models.Chain:
+    properties:
+      baseChain:
+        type: string
+      baseChainProtocol:
+        type: string
+      chain:
+        type: string
+      deposit_status:
+        type: string
+      displayName:
+        type: string
+      isDynamic:
+        type: boolean
+      maxTransactFeeWithdraw:
+        type: number
+      maxWithdrawAmt:
+        type: number
+      minDepositAmt:
+        type: number
+      minTransactFeeWithdraw:
+        type: number
+      minWithdrawAmt:
+        type: number
+      numOfConfirmations:
+        type: integer
+      numOfFastConfirmations:
+        type: integer
+      transactFeeRateWithdraw:
+        type: number
+      transactFeeWithdraw:
+        type: number
+      withdrawFeeType:
+        type: string
+      withdrawPrecision:
+        type: integer
+      withdrawQuotaPerDay:
+        type: number
+      withdrawQuotaPerYear:
+        type: number
+      withdrawQuotaTotal:
+        type: number
+      withdrawStatus:
+        type: string
+    type: object
+  models.Currency:
+    properties:
+      chains:
+        items:
+          $ref: '#/definitions/models.Chain'
+        type: array
+      currency:
+        type: string
+      instStatus:
+        type: string
+    type: object
+  models.Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      message:
+        type: string
+    type: object
 host: api.testnet.huobi.pro
 info:
   contact:
@@ -25,6 +91,43 @@ paths:
           schema:
             type: integer
       summary: Get Current Timestamp
+      tags:
+      - Reference Data
+  /v2/reference/currencies:
+    get:
+      consumes:
+      - application/json
+      description: API user could query static reference information for each currency, as well as its corresponding chain(s). (Public Endpoint)
+      operationId: CurrencyAndChainsV2
+      parameters:
+      - description: btc, ltc, etc ...(available currencies in Huobi Global)
+        in: path
+        name: currency
+        type: string
+      - description: true or false (if not filled, default value is true)
+        in: path
+        name: authorizedUser
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Currency & Chains list
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/models.Currency'
+                  - properties:
+                      chains:
+                        items:
+                          $ref: '#/definitions/models.Chain'
+                        type: array
+                    type: object
+              type: object
+      summary: Currency & Chains
       tags:
       - Reference Data
 schemes:

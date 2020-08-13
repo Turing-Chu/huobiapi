@@ -27,5 +27,123 @@ paths:
       summary: Get Current Timestamp
       tags:
       - Reference Data
+  /v2/reference/currencies:
+    get:
+      description: API user could query static reference information for each currency,
+        as well as its corresponding chain(s). (Public Endpoint)
+      operationId: CurrencyAndChainsV2
+      parameters:
+      - description: btc, ltc, etc ...(available currencies in Huobi Global)
+        in: path
+        name: currency
+        required: true
+        schema:
+          type: string
+      - description: true or false (if not filled, default value is true)
+        in: path
+        name: authorizedUser
+        required: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+          description: Currency & Chains list
+      summary: Currency & Chains
+      tags:
+      - Reference Data
 components:
-  schemas: {}
+  schemas:
+    models.Chain:
+      properties:
+        baseChain:
+          type: string
+        baseChainProtocol:
+          type: string
+        chain:
+          type: string
+        deposit_status:
+          type: string
+        displayName:
+          type: string
+        isDynamic:
+          type: boolean
+        maxTransactFeeWithdraw:
+          type: number
+        maxWithdrawAmt:
+          type: number
+        minDepositAmt:
+          type: number
+        minTransactFeeWithdraw:
+          type: number
+        minWithdrawAmt:
+          type: number
+        numOfConfirmations:
+          type: integer
+        numOfFastConfirmations:
+          type: integer
+        transactFeeRateWithdraw:
+          type: number
+        transactFeeWithdraw:
+          type: number
+        withdrawFeeType:
+          type: string
+        withdrawPrecision:
+          type: integer
+        withdrawQuotaPerDay:
+          type: number
+        withdrawQuotaPerYear:
+          type: number
+        withdrawQuotaTotal:
+          type: number
+        withdrawStatus:
+          type: string
+      type: object
+    models.Currency:
+      properties:
+        chains:
+          items:
+            $ref: '#/components/schemas/models.Chain'
+          type: array
+        currency:
+          type: string
+        instStatus:
+          type: string
+      type: object
+    models.Response:
+      example:
+        code: 0
+        data: '{}'
+        message: message
+      properties:
+        code:
+          type: integer
+        data:
+          properties: {}
+          type: object
+        message:
+          type: string
+      type: object
+    inline_response_200:
+      example:
+        data: '{}'
+        models.Response:
+          code: 0
+          data: '{}'
+          message: message
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/models.Currency'
+          - properties:
+              chains:
+                items:
+                  $ref: '#/definitions/models.Chain'
+                type: array
+            type: object
+          type: object
+        models.Response:
+          $ref: '#/components/schemas/models.Response'

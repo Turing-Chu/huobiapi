@@ -5,8 +5,8 @@
 package ginSwagger
 
 import (
-	_ "github.com/Turing-Chu/huobiapi/models"
 	"github.com/gin-gonic/gin"
+	_ "huobiapi/models"
 )
 
 // Get Current Timestamp
