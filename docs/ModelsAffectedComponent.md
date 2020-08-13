@@ -1,11 +1,13 @@
-# InlineResponse2002
+# ModelsAffectedComponent
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | [**[]ModelsSymbol**](models.Symbol.md) |  | [optional] 
-**ModelsResponseV1** | [**ModelsResponseV1**](models.ResponseV1.md) |  | [optional] 
+**Code** | **string** |  | [optional] 
+**Name** | **string** |  | [optional] 
+**NewStatus** | **string** |  | [optional] 
+**OldStatus** | **string** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

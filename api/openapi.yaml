@@ -12,6 +12,21 @@ info:
 servers:
 - url: https://api.testnet.huobi.pro/
 paths:
+  /api/v2/summary.json:
+    get:
+      description: This endpoint allows users to get system status, Incidents and
+        planned maintenance.
+      operationId: Summary
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+          description: OK
+      summary: Get system status
+      tags:
+      - Reference Data
   /v1/common/currencys:
     get:
       description: This endpoint returns all Huobi's supported trading currencies.
@@ -21,7 +36,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/inline_response_200_1'
           description: supported currency
       summary: Get all Supported Currencies
       tags:
@@ -35,7 +50,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/inline_response_200_2'
           description: Supported Trading Symbol List
       summary: Get all Supported Trading Symbol
       tags:
@@ -53,6 +68,21 @@ paths:
                 type: integer
           description: OK
       summary: Get Current Timestamp
+      tags:
+      - Reference Data
+  /v2/market-status:
+    get:
+      description: 'The enum values of market status includes: 1 - normal (order submission
+        & cancellation are allowed)，'
+      operationId: MarketStatusV2
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+          description: OK
+      summary: The endpoint returns current market status
       tags:
       - Reference Data
   /v2/reference/currencies:
@@ -78,13 +108,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_2'
+                $ref: '#/components/schemas/inline_response_200_4'
           description: Currency & Chains list
       summary: Currency & Chains
       tags:
       - Reference Data
 components:
   schemas:
+    models.AffectedComponent:
+      example:
+        old_status: old_status
+        code: code
+        name: name
+        new_status: new_status
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        new_status:
+          type: string
+        old_status:
+          type: string
+      type: object
     models.Chain:
       properties:
         baseChain:
@@ -130,6 +176,46 @@ components:
         withdrawStatus:
           type: string
       type: object
+    models.Component:
+      example:
+        page_id: page_id
+        updated_at: updated_at
+        group_id: group_id
+        name: name
+        created_at: created_at
+        description: description
+        showcase: true
+        only_show_if_degraded: true
+        id: id
+        position: 0
+        group: true
+        status: status
+      properties:
+        created_at:
+          type: string
+        description:
+          type: string
+        group:
+          type: boolean
+        group_id:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        only_show_if_degraded:
+          type: boolean
+        page_id:
+          type: string
+        position:
+          type: integer
+        showcase:
+          type: boolean
+        status:
+          type: string
+        updated_at:
+          type: string
+      type: object
     models.Currency:
       properties:
         chains:
@@ -139,6 +225,202 @@ components:
         currency:
           type: string
         instStatus:
+          type: string
+      type: object
+    models.Incident:
+      example:
+        monitoring_at: monitoring_at
+        components:
+        - page_id: page_id
+          updated_at: updated_at
+          group_id: group_id
+          name: name
+          created_at: created_at
+          description: description
+          showcase: true
+          only_show_if_degraded: true
+          id: id
+          position: 0
+          group: true
+          status: status
+        - page_id: page_id
+          updated_at: updated_at
+          group_id: group_id
+          name: name
+          created_at: created_at
+          description: description
+          showcase: true
+          only_show_if_degraded: true
+          id: id
+          position: 0
+          group: true
+          status: status
+        impact: impact
+        created_at: created_at
+        page_id: page_id
+        updated_at: updated_at
+        resolved_at: resolved_at
+        name: name
+        incident_updates:
+        - incident_id: incident_id
+          updated_at: updated_at
+          tweet_id: tweet_id
+          created_at: created_at
+          custom_tweet: '{}'
+          id: id
+          body: body
+          affected_components:
+          - old_status: old_status
+            code: code
+            name: name
+            new_status: new_status
+          - old_status: old_status
+            code: code
+            name: name
+            new_status: new_status
+          deliver_notifications: true
+          display_at: display_at
+          status: status
+        - incident_id: incident_id
+          updated_at: updated_at
+          tweet_id: tweet_id
+          created_at: created_at
+          custom_tweet: '{}'
+          id: id
+          body: body
+          affected_components:
+          - old_status: old_status
+            code: code
+            name: name
+            new_status: new_status
+          - old_status: old_status
+            code: code
+            name: name
+            new_status: new_status
+          deliver_notifications: true
+          display_at: display_at
+          status: status
+        started_at: started_at
+        id: id
+        shortlink: shortlink
+        status: status
+      properties:
+        components:
+          items:
+            $ref: '#/components/schemas/models.Component'
+          type: array
+        created_at:
+          type: string
+        id:
+          type: string
+        impact:
+          type: string
+        incident_updates:
+          items:
+            $ref: '#/components/schemas/models.IncidentUpdate'
+          type: array
+        monitoring_at:
+          type: string
+        name:
+          type: string
+        page_id:
+          type: string
+        resolved_at:
+          type: string
+        shortlink:
+          type: string
+        started_at:
+          type: string
+        status:
+          type: string
+        updated_at:
+          type: string
+      type: object
+    models.IncidentUpdate:
+      example:
+        incident_id: incident_id
+        updated_at: updated_at
+        tweet_id: tweet_id
+        created_at: created_at
+        custom_tweet: '{}'
+        id: id
+        body: body
+        affected_components:
+        - old_status: old_status
+          code: code
+          name: name
+          new_status: new_status
+        - old_status: old_status
+          code: code
+          name: name
+          new_status: new_status
+        deliver_notifications: true
+        display_at: display_at
+        status: status
+      properties:
+        affected_components:
+          items:
+            $ref: '#/components/schemas/models.AffectedComponent'
+          type: array
+        body:
+          type: string
+        created_at:
+          type: string
+        custom_tweet:
+          properties: {}
+          type: object
+        deliver_notifications:
+          type: boolean
+        display_at:
+          type: string
+        id:
+          type: string
+        incident_id:
+          type: string
+        status:
+          type: string
+        tweet_id:
+          type: string
+        updated_at:
+          type: string
+      type: object
+    models.MarketStatus:
+      example:
+        affectedSymbols: affectedSymbols
+        haltReason: 6
+        haltEndTime: 0
+        marketStatus: 1
+        haltStartTime: 1
+      properties:
+        affectedSymbols:
+          type: string
+        haltEndTime:
+          type: integer
+        haltReason:
+          type: integer
+        haltStartTime:
+          type: integer
+        marketStatus:
+          example: 1
+          type: integer
+      type: object
+    models.Page:
+      example:
+        updated_at: updated_at
+        name: name
+        id: id
+        time_zone: time_zone
+        url: url
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        time_zone:
+          type: string
+        updated_at:
+          type: string
+        url:
           type: string
       type: object
     models.Response:
@@ -165,6 +447,481 @@ components:
           type: object
         status:
           type: string
+      type: object
+    models.ScheduledMaintenance:
+      example:
+        monitoring_at: monitoring_at
+        components:
+        - page_id: page_id
+          updated_at: updated_at
+          group_id: group_id
+          name: name
+          created_at: created_at
+          description: description
+          showcase: true
+          only_show_if_degraded: true
+          id: id
+          position: 0
+          group: true
+          status: status
+        - page_id: page_id
+          updated_at: updated_at
+          group_id: group_id
+          name: name
+          created_at: created_at
+          description: description
+          showcase: true
+          only_show_if_degraded: true
+          id: id
+          position: 0
+          group: true
+          status: status
+        impact: impact
+        created_at: created_at
+        scheduled_for: scheduled_for
+        page_id: page_id
+        updated_at: updated_at
+        resolved_at: resolved_at
+        name: name
+        incident_updates:
+        - incident_id: incident_id
+          updated_at: updated_at
+          tweet_id: tweet_id
+          created_at: created_at
+          custom_tweet: '{}'
+          id: id
+          body: body
+          affected_components:
+          - old_status: old_status
+            code: code
+            name: name
+            new_status: new_status
+          - old_status: old_status
+            code: code
+            name: name
+            new_status: new_status
+          deliver_notifications: true
+          display_at: display_at
+          status: status
+        - incident_id: incident_id
+          updated_at: updated_at
+          tweet_id: tweet_id
+          created_at: created_at
+          custom_tweet: '{}'
+          id: id
+          body: body
+          affected_components:
+          - old_status: old_status
+            code: code
+            name: name
+            new_status: new_status
+          - old_status: old_status
+            code: code
+            name: name
+            new_status: new_status
+          deliver_notifications: true
+          display_at: display_at
+          status: status
+        started_at: started_at
+        id: id
+        scheduled_until: scheduled_until
+        shortlink: shortlink
+        status: status
+      properties:
+        components:
+          items:
+            $ref: '#/components/schemas/models.Component'
+          type: array
+        created_at:
+          type: string
+        id:
+          type: string
+        impact:
+          type: string
+        incident_updates:
+          items:
+            $ref: '#/components/schemas/models.IncidentUpdate'
+          type: array
+        monitoring_at:
+          type: string
+        name:
+          type: string
+        page_id:
+          type: string
+        resolved_at:
+          type: string
+        scheduled_for:
+          type: string
+        scheduled_until:
+          type: string
+        shortlink:
+          type: string
+        started_at:
+          type: string
+        status:
+          type: string
+        updated_at:
+          type: string
+      type: object
+    models.Summary:
+      example:
+        components:
+        - page_id: page_id
+          updated_at: updated_at
+          group_id: group_id
+          name: name
+          created_at: created_at
+          description: description
+          showcase: true
+          only_show_if_degraded: true
+          id: id
+          position: 0
+          group: true
+          status: status
+        - page_id: page_id
+          updated_at: updated_at
+          group_id: group_id
+          name: name
+          created_at: created_at
+          description: description
+          showcase: true
+          only_show_if_degraded: true
+          id: id
+          position: 0
+          group: true
+          status: status
+        incidents:
+        - monitoring_at: monitoring_at
+          components:
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          impact: impact
+          created_at: created_at
+          page_id: page_id
+          updated_at: updated_at
+          resolved_at: resolved_at
+          name: name
+          incident_updates:
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          started_at: started_at
+          id: id
+          shortlink: shortlink
+          status: status
+        - monitoring_at: monitoring_at
+          components:
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          impact: impact
+          created_at: created_at
+          page_id: page_id
+          updated_at: updated_at
+          resolved_at: resolved_at
+          name: name
+          incident_updates:
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          started_at: started_at
+          id: id
+          shortlink: shortlink
+          status: status
+        page:
+          updated_at: updated_at
+          name: name
+          id: id
+          time_zone: time_zone
+          url: url
+        scheduled_maintenances:
+        - monitoring_at: monitoring_at
+          components:
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          impact: impact
+          created_at: created_at
+          scheduled_for: scheduled_for
+          page_id: page_id
+          updated_at: updated_at
+          resolved_at: resolved_at
+          name: name
+          incident_updates:
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          started_at: started_at
+          id: id
+          scheduled_until: scheduled_until
+          shortlink: shortlink
+          status: status
+        - monitoring_at: monitoring_at
+          components:
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          impact: impact
+          created_at: created_at
+          scheduled_for: scheduled_for
+          page_id: page_id
+          updated_at: updated_at
+          resolved_at: resolved_at
+          name: name
+          incident_updates:
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          started_at: started_at
+          id: id
+          scheduled_until: scheduled_until
+          shortlink: shortlink
+          status: status
+        status:
+          indicator: indicator
+          description: description
+      properties:
+        components:
+          items:
+            $ref: '#/components/schemas/models.Component'
+          type: array
+        incidents:
+          items:
+            $ref: '#/components/schemas/models.Incident'
+          type: array
+        page:
+          $ref: '#/components/schemas/models.Page'
+        scheduled_maintenances:
+          items:
+            $ref: '#/components/schemas/models.ScheduledMaintenance'
+          type: array
+        status:
+          $ref: '#/components/schemas/models.SystemStatus'
       type: object
     models.Symbol:
       example:
@@ -242,7 +999,587 @@ components:
         value-precision:
           type: integer
       type: object
+    models.SystemStatus:
+      example:
+        indicator: indicator
+        description: description
+      properties:
+        description:
+          type: string
+        indicator:
+          type: string
+      type: object
     inline_response_200:
+      example:
+        components:
+        - page_id: page_id
+          updated_at: updated_at
+          group_id: group_id
+          name: name
+          created_at: created_at
+          description: description
+          showcase: true
+          only_show_if_degraded: true
+          id: id
+          position: 0
+          group: true
+          status: status
+        - page_id: page_id
+          updated_at: updated_at
+          group_id: group_id
+          name: name
+          created_at: created_at
+          description: description
+          showcase: true
+          only_show_if_degraded: true
+          id: id
+          position: 0
+          group: true
+          status: status
+        incidents:
+        - '{}'
+        - '{}'
+        page:
+          updated_at: updated_at
+          name: name
+          id: id
+          time_zone: time_zone
+          url: url
+        models.Summary:
+          components:
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          incidents:
+          - monitoring_at: monitoring_at
+            components:
+            - page_id: page_id
+              updated_at: updated_at
+              group_id: group_id
+              name: name
+              created_at: created_at
+              description: description
+              showcase: true
+              only_show_if_degraded: true
+              id: id
+              position: 0
+              group: true
+              status: status
+            - page_id: page_id
+              updated_at: updated_at
+              group_id: group_id
+              name: name
+              created_at: created_at
+              description: description
+              showcase: true
+              only_show_if_degraded: true
+              id: id
+              position: 0
+              group: true
+              status: status
+            impact: impact
+            created_at: created_at
+            page_id: page_id
+            updated_at: updated_at
+            resolved_at: resolved_at
+            name: name
+            incident_updates:
+            - incident_id: incident_id
+              updated_at: updated_at
+              tweet_id: tweet_id
+              created_at: created_at
+              custom_tweet: '{}'
+              id: id
+              body: body
+              affected_components:
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              deliver_notifications: true
+              display_at: display_at
+              status: status
+            - incident_id: incident_id
+              updated_at: updated_at
+              tweet_id: tweet_id
+              created_at: created_at
+              custom_tweet: '{}'
+              id: id
+              body: body
+              affected_components:
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              deliver_notifications: true
+              display_at: display_at
+              status: status
+            started_at: started_at
+            id: id
+            shortlink: shortlink
+            status: status
+          - monitoring_at: monitoring_at
+            components:
+            - page_id: page_id
+              updated_at: updated_at
+              group_id: group_id
+              name: name
+              created_at: created_at
+              description: description
+              showcase: true
+              only_show_if_degraded: true
+              id: id
+              position: 0
+              group: true
+              status: status
+            - page_id: page_id
+              updated_at: updated_at
+              group_id: group_id
+              name: name
+              created_at: created_at
+              description: description
+              showcase: true
+              only_show_if_degraded: true
+              id: id
+              position: 0
+              group: true
+              status: status
+            impact: impact
+            created_at: created_at
+            page_id: page_id
+            updated_at: updated_at
+            resolved_at: resolved_at
+            name: name
+            incident_updates:
+            - incident_id: incident_id
+              updated_at: updated_at
+              tweet_id: tweet_id
+              created_at: created_at
+              custom_tweet: '{}'
+              id: id
+              body: body
+              affected_components:
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              deliver_notifications: true
+              display_at: display_at
+              status: status
+            - incident_id: incident_id
+              updated_at: updated_at
+              tweet_id: tweet_id
+              created_at: created_at
+              custom_tweet: '{}'
+              id: id
+              body: body
+              affected_components:
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              deliver_notifications: true
+              display_at: display_at
+              status: status
+            started_at: started_at
+            id: id
+            shortlink: shortlink
+            status: status
+          page:
+            updated_at: updated_at
+            name: name
+            id: id
+            time_zone: time_zone
+            url: url
+          scheduled_maintenances:
+          - monitoring_at: monitoring_at
+            components:
+            - page_id: page_id
+              updated_at: updated_at
+              group_id: group_id
+              name: name
+              created_at: created_at
+              description: description
+              showcase: true
+              only_show_if_degraded: true
+              id: id
+              position: 0
+              group: true
+              status: status
+            - page_id: page_id
+              updated_at: updated_at
+              group_id: group_id
+              name: name
+              created_at: created_at
+              description: description
+              showcase: true
+              only_show_if_degraded: true
+              id: id
+              position: 0
+              group: true
+              status: status
+            impact: impact
+            created_at: created_at
+            scheduled_for: scheduled_for
+            page_id: page_id
+            updated_at: updated_at
+            resolved_at: resolved_at
+            name: name
+            incident_updates:
+            - incident_id: incident_id
+              updated_at: updated_at
+              tweet_id: tweet_id
+              created_at: created_at
+              custom_tweet: '{}'
+              id: id
+              body: body
+              affected_components:
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              deliver_notifications: true
+              display_at: display_at
+              status: status
+            - incident_id: incident_id
+              updated_at: updated_at
+              tweet_id: tweet_id
+              created_at: created_at
+              custom_tweet: '{}'
+              id: id
+              body: body
+              affected_components:
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              deliver_notifications: true
+              display_at: display_at
+              status: status
+            started_at: started_at
+            id: id
+            scheduled_until: scheduled_until
+            shortlink: shortlink
+            status: status
+          - monitoring_at: monitoring_at
+            components:
+            - page_id: page_id
+              updated_at: updated_at
+              group_id: group_id
+              name: name
+              created_at: created_at
+              description: description
+              showcase: true
+              only_show_if_degraded: true
+              id: id
+              position: 0
+              group: true
+              status: status
+            - page_id: page_id
+              updated_at: updated_at
+              group_id: group_id
+              name: name
+              created_at: created_at
+              description: description
+              showcase: true
+              only_show_if_degraded: true
+              id: id
+              position: 0
+              group: true
+              status: status
+            impact: impact
+            created_at: created_at
+            scheduled_for: scheduled_for
+            page_id: page_id
+            updated_at: updated_at
+            resolved_at: resolved_at
+            name: name
+            incident_updates:
+            - incident_id: incident_id
+              updated_at: updated_at
+              tweet_id: tweet_id
+              created_at: created_at
+              custom_tweet: '{}'
+              id: id
+              body: body
+              affected_components:
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              deliver_notifications: true
+              display_at: display_at
+              status: status
+            - incident_id: incident_id
+              updated_at: updated_at
+              tweet_id: tweet_id
+              created_at: created_at
+              custom_tweet: '{}'
+              id: id
+              body: body
+              affected_components:
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              - old_status: old_status
+                code: code
+                name: name
+                new_status: new_status
+              deliver_notifications: true
+              display_at: display_at
+              status: status
+            started_at: started_at
+            id: id
+            scheduled_until: scheduled_until
+            shortlink: shortlink
+            status: status
+          status:
+            indicator: indicator
+            description: description
+        scheduled_maintenances:
+        - monitoring_at: monitoring_at
+          components:
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          impact: impact
+          created_at: created_at
+          scheduled_for: scheduled_for
+          page_id: page_id
+          updated_at: updated_at
+          resolved_at: resolved_at
+          name: name
+          incident_updates:
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          started_at: started_at
+          id: id
+          scheduled_until: scheduled_until
+          shortlink: shortlink
+          status: status
+        - monitoring_at: monitoring_at
+          components:
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          - page_id: page_id
+            updated_at: updated_at
+            group_id: group_id
+            name: name
+            created_at: created_at
+            description: description
+            showcase: true
+            only_show_if_degraded: true
+            id: id
+            position: 0
+            group: true
+            status: status
+          impact: impact
+          created_at: created_at
+          scheduled_for: scheduled_for
+          page_id: page_id
+          updated_at: updated_at
+          resolved_at: resolved_at
+          name: name
+          incident_updates:
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          - incident_id: incident_id
+            updated_at: updated_at
+            tweet_id: tweet_id
+            created_at: created_at
+            custom_tweet: '{}'
+            id: id
+            body: body
+            affected_components:
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            - old_status: old_status
+              code: code
+              name: name
+              new_status: new_status
+            deliver_notifications: true
+            display_at: display_at
+            status: status
+          started_at: started_at
+          id: id
+          scheduled_until: scheduled_until
+          shortlink: shortlink
+          status: status
+        status:
+          indicator: indicator
+          description: description
+      properties:
+        components:
+          items:
+            $ref: '#/components/schemas/models.Component'
+          type: array
+        incidents:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/models.Incident'
+            - properties:
+                incident_updates:
+                  items:
+                    allOf:
+                    - $ref: '#/definitions/models.IncidentUpdate'
+                    - properties:
+                        affected_components:
+                          items:
+                            $ref: '#/definitions/models.AffectedComponent'
+                          type: array
+                      type: object
+                    type: object
+                  type: array
+              type: object
+            type: object
+          type: array
+        models.Summary:
+          $ref: '#/components/schemas/models.Summary'
+        page:
+          $ref: '#/components/schemas/models.Page'
+        scheduled_maintenances:
+          items:
+            $ref: '#/components/schemas/models.ScheduledMaintenance'
+          type: array
+        status:
+          $ref: '#/components/schemas/models.SystemStatus'
+    inline_response_200_1:
       example:
         data:
         - data
@@ -258,7 +1595,7 @@ components:
           type: array
         models.Response:
           $ref: '#/components/schemas/models.Response'
-    inline_response_200_1:
+    inline_response_200_2:
       example:
         data:
         - charge-time: charge-time
@@ -319,7 +1656,24 @@ components:
           type: array
         models.ResponseV1:
           $ref: '#/components/schemas/models.ResponseV1'
-    inline_response_200_2:
+    inline_response_200_3:
+      example:
+        data:
+          affectedSymbols: affectedSymbols
+          haltReason: 6
+          haltEndTime: 0
+          marketStatus: 1
+          haltStartTime: 1
+        models.Response:
+          code: 0
+          data: '{}'
+          message: message
+      properties:
+        data:
+          $ref: '#/components/schemas/models.MarketStatus'
+        models.Response:
+          $ref: '#/components/schemas/models.Response'
+    inline_response_200_4:
       example:
         data: '{}'
         models.Response:

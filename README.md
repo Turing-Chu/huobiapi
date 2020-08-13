@@ -33,6 +33,8 @@ All URIs are relative to *https://api.testnet.huobi.pro*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *ReferenceDataApi* | [**CurrencyAndChainsV2**](docs/ReferenceDataApi.md#currencyandchainsv2) | **Get** /v2/reference/currencies | Currency &amp; Chains
+*ReferenceDataApi* | [**MarketStatusV2**](docs/ReferenceDataApi.md#marketstatusv2) | **Get** /v2/market-status | The endpoint returns current market status
+*ReferenceDataApi* | [**Summary**](docs/ReferenceDataApi.md#summary) | **Get** /api/v2/summary.json | Get system status
 *ReferenceDataApi* | [**SupportCurrenciesV1**](docs/ReferenceDataApi.md#supportcurrenciesv1) | **Get** /v1/common/currencys | Get all Supported Currencies
 *ReferenceDataApi* | [**SupportedTradingSymbolV1**](docs/ReferenceDataApi.md#supportedtradingsymbolv1) | **Get** /v1/common/symbols | Get all Supported Trading Symbol
 *ReferenceDataApi* | [**TimestampV1**](docs/ReferenceDataApi.md#timestampv1) | **Get** /v1/common/timestamp | Get Current Timestamp
@@ -43,11 +45,22 @@ Class | Method | HTTP request | Description
  - [InlineResponse200](docs/InlineResponse200.md)
  - [InlineResponse2001](docs/InlineResponse2001.md)
  - [InlineResponse2002](docs/InlineResponse2002.md)
+ - [InlineResponse2003](docs/InlineResponse2003.md)
+ - [InlineResponse2004](docs/InlineResponse2004.md)
+ - [ModelsAffectedComponent](docs/ModelsAffectedComponent.md)
  - [ModelsChain](docs/ModelsChain.md)
+ - [ModelsComponent](docs/ModelsComponent.md)
  - [ModelsCurrency](docs/ModelsCurrency.md)
+ - [ModelsIncident](docs/ModelsIncident.md)
+ - [ModelsIncidentUpdate](docs/ModelsIncidentUpdate.md)
+ - [ModelsMarketStatus](docs/ModelsMarketStatus.md)
+ - [ModelsPage](docs/ModelsPage.md)
  - [ModelsResponse](docs/ModelsResponse.md)
  - [ModelsResponseV1](docs/ModelsResponseV1.md)
+ - [ModelsScheduledMaintenance](docs/ModelsScheduledMaintenance.md)
+ - [ModelsSummary](docs/ModelsSummary.md)
  - [ModelsSymbol](docs/ModelsSymbol.md)
+ - [ModelsSystemStatus](docs/ModelsSystemStatus.md)
 
 
 ## Documentation For Authorization

@@ -1,4 +1,4 @@
-# InlineResponse200
+# ModelsSummary
 
 ## Properties
 
@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Components** | [**[]ModelsComponent**](models.Component.md) |  | [optional] 
 **Incidents** | [**[]ModelsIncident**](models.Incident.md) |  | [optional] 
-**ModelsSummary** | [**ModelsSummary**](models.Summary.md) |  | [optional] 
 **Page** | [**ModelsPage**](models.Page.md) |  | [optional] 
 **ScheduledMaintenances** | [**[]ModelsScheduledMaintenance**](models.ScheduledMaintenance.md) |  | [optional] 
 **Status** | [**ModelsSystemStatus**](models.SystemStatus.md) |  | [optional] 

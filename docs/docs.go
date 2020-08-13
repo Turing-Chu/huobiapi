@@ -31,6 +31,93 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v2/summary.json": {
+            "get": {
+                "description": "This endpoint allows users to get system status, Incidents and planned maintenance.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reference Data"
+                ],
+                "summary": "Get system status",
+                "operationId": "Summary",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.Summary"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "components": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/models.Component"
+                                            }
+                                        },
+                                        "incidents": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/definitions/models.Incident"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "incident_updates": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "allOf": [
+                                                                        {
+                                                                            "$ref": "#/definitions/models.IncidentUpdate"
+                                                                        },
+                                                                        {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "affected_components": {
+                                                                                    "type": "array",
+                                                                                    "items": {
+                                                                                        "$ref": "#/definitions/models.AffectedComponent"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "page": {
+                                            "$ref": "#/definitions/models.Page"
+                                        },
+                                        "scheduled_maintenances": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/models.ScheduledMaintenance"
+                                            }
+                                        },
+                                        "status": {
+                                            "$ref": "#/definitions/models.SystemStatus"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/v1/common/currencys": {
             "get": {
                 "description": "This endpoint returns all Huobi's supported trading currencies.",
@@ -133,6 +220,42 @@ var doc = `{
                 }
             }
         },
+        "/v2/market-status": {
+            "get": {
+                "description": "The enum values of market status includes: 1 - normal (order submission \u0026 cancellation are allowed)，",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reference Data"
+                ],
+                "summary": "The endpoint returns current market status",
+                "operationId": "MarketStatusV2",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.MarketStatus"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/v2/reference/currencies": {
             "get": {
                 "description": "API user could query static reference information for each currency, as well as its corresponding chain(s). (Public Endpoint)",
@@ -200,6 +323,23 @@ var doc = `{
         }
     },
     "definitions": {
+        "models.AffectedComponent": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "new_status": {
+                    "type": "string"
+                },
+                "old_status": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Chain": {
             "type": "object",
             "properties": {
@@ -268,6 +408,47 @@ var doc = `{
                 }
             }
         },
+        "models.Component": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "group": {
+                    "type": "boolean"
+                },
+                "group_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "only_show_if_degraded": {
+                    "type": "boolean"
+                },
+                "page_id": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "integer"
+                },
+                "showcase": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Currency": {
             "type": "object",
             "properties": {
@@ -281,6 +462,138 @@ var doc = `{
                     "type": "string"
                 },
                 "instStatus": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Incident": {
+            "type": "object",
+            "properties": {
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Component"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "impact": {
+                    "type": "string"
+                },
+                "incident_updates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.IncidentUpdate"
+                    }
+                },
+                "monitoring_at": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "page_id": {
+                    "type": "string"
+                },
+                "resolved_at": {
+                    "type": "string"
+                },
+                "shortlink": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.IncidentUpdate": {
+            "type": "object",
+            "properties": {
+                "affected_components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.AffectedComponent"
+                    }
+                },
+                "body": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "custom_tweet": {
+                    "type": "object"
+                },
+                "deliver_notifications": {
+                    "type": "boolean"
+                },
+                "display_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "incident_id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tweet_id": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.MarketStatus": {
+            "type": "object",
+            "properties": {
+                "affectedSymbols": {
+                    "type": "string"
+                },
+                "haltEndTime": {
+                    "type": "integer"
+                },
+                "haltReason": {
+                    "type": "integer"
+                },
+                "haltStartTime": {
+                    "type": "integer"
+                },
+                "marketStatus": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "models.Page": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "time_zone": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "url": {
                     "type": "string"
                 }
             }
@@ -307,6 +620,93 @@ var doc = `{
                 },
                 "status": {
                     "type": "string"
+                }
+            }
+        },
+        "models.ScheduledMaintenance": {
+            "type": "object",
+            "properties": {
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Component"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "impact": {
+                    "type": "string"
+                },
+                "incident_updates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.IncidentUpdate"
+                    }
+                },
+                "monitoring_at": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "page_id": {
+                    "type": "string"
+                },
+                "resolved_at": {
+                    "type": "string"
+                },
+                "scheduled_for": {
+                    "type": "string"
+                },
+                "scheduled_until": {
+                    "type": "string"
+                },
+                "shortlink": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Summary": {
+            "type": "object",
+            "properties": {
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Component"
+                    }
+                },
+                "incidents": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Incident"
+                    }
+                },
+                "page": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Page"
+                },
+                "scheduled_maintenances": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ScheduledMaintenance"
+                    }
+                },
+                "status": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.SystemStatus"
                 }
             }
         },
@@ -384,6 +784,17 @@ var doc = `{
                 },
                 "value-precision": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.SystemStatus": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "indicator": {
+                    "type": "string"
                 }
             }
         }

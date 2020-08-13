@@ -11,7 +11,9 @@
 package huobiapi
 // ModelsMarketStatus struct for ModelsMarketStatus
 type ModelsMarketStatus struct {
-	Code int32 `json:"code,omitempty"`
-	Data ModelsMarketStatusData `json:"data,omitempty"`
-	Message string `json:"message,omitempty"`
+	AffectedSymbols string `json:"affectedSymbols,omitempty"`
+	HaltEndTime int32 `json:"haltEndTime,omitempty"`
+	HaltReason int32 `json:"haltReason,omitempty"`
+	HaltStartTime int32 `json:"haltStartTime,omitempty"`
+	MarketStatus int32 `json:"marketStatus,omitempty"`
 }
