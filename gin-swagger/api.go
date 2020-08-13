@@ -13,13 +13,17 @@ import (
 
 // @title Huobi API
 // @version 0.1
+// @schemes https
 // @description Huobi API
 // @contact.name Turing Zhu
 // @contact.email qishiwenjun@163.com
 // @license.name MIT License
 // @license.url https://opensource.org/licenses/MIT
 // @host api.testnet.huobi.pro
-// @BasePath /api
+// @basePath /
+// @securityDefinitions.apikey ApiKeyAuth
+// @in path
+// @name AccessKeyId
 func Run() {
 	engine := gin.New()
 	listening := fmt.Sprintf("%s:%d", "127.0.0.1", 8808)

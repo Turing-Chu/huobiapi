@@ -83,13 +83,13 @@ type Configuration struct {
 // NewConfiguration returns a new Configuration object
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
-		BasePath:      "http://api.testnet.huobi.pro/api",
+		BasePath:      "https://api.testnet.huobi.pro",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "OpenAPI-Generator/1.0.0/go",
 		Debug:         false,
 		Servers:       []ServerConfiguration{
 			{
-				Url: "//api.testnet.huobi.pro/api",
+				Url: "https://api.testnet.huobi.pro/",
 				Description: "No description provided",
 			},
 		},
