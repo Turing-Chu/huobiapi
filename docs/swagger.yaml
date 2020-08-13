@@ -1,31 +1,4 @@
-basePath: /api
-definitions:
-  models.MarketStatus:
-    properties:
-      code:
-        type: integer
-      data:
-        properties:
-          affectedSymbols:
-            type: string
-          haltEndTime:
-            type: integer
-          haltReason:
-            type: integer
-          haltStartTime:
-            type: integer
-          marketStatus:
-            example: 1
-            type: integer
-        type: object
-      message:
-        type: string
-    type: object
-  models.Summary:
-    properties:
-      status:
-        type: Status
-    type: object
+basePath: /
 host: api.testnet.huobi.pro
 info:
   contact:
@@ -38,34 +11,27 @@ info:
   title: Huobi API
   version: "0.1"
 paths:
-  /v2/market-status:
+  /v1/common/timestamp:
     get:
       consumes:
       - application/json
-      description: 'The enum values of market status includes: 1 - normal (order submission & cancellation are allowed)，'
+      description: This endpoint returns the current timestamp, i.e. the number of milliseconds that have elapsed since 00:00:00 UTC on 1 January 1970.
+      operationId: TimestampV1
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.MarketStatus'
-      summary: The endpoint returns current market status
+            type: integer
+      summary: Get Current Timestamp
       tags:
       - Reference Data
-  /v2/summary.json:
-    get:
-      consumes:
-      - application/json
-      description: This endpoint allows users to get system status, Incidents and planned maintenance.
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Summary'
-      summary: Get system status
-      tags:
-      - Reference Data
+schemes:
+- https
+securityDefinitions:
+  ApiKeyAuth:
+    in: path
+    name: AccessKeyId
+    type: apiKey
 swagger: "2.0"

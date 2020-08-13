@@ -28,18 +28,15 @@ import "./huobiapi"
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://api.testnet.huobi.pro/api*
+All URIs are relative to *https://api.testnet.huobi.pro*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ReferenceDataApi* | [**V2MarketStatusGet**](docs/ReferenceDataApi.md#v2marketstatusget) | **Get** /v2/market-status | The endpoint returns current market status
-*ReferenceDataApi* | [**V2SummaryJsonGet**](docs/ReferenceDataApi.md#v2summaryjsonget) | **Get** /v2/summary.json | Get system status
+*ReferenceDataApi* | [**TimestampV1**](docs/ReferenceDataApi.md#timestampv1) | **Get** /v1/common/timestamp | Get Current Timestamp
 
 
 ## Documentation For Models
 
- - [ModelsMarketStatus](docs/ModelsMarketStatus.md)
- - [ModelsMarketStatusData](docs/ModelsMarketStatusData.md)
 
 
 ## Documentation For Authorization

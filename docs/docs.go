@@ -31,9 +31,9 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v2/market-status": {
+        "/v1/common/timestamp": {
             "get": {
-                "description": "The enum values of market status includes: 1 - normal (order submission \u0026 cancellation are allowed)，",
+                "description": "This endpoint returns the current timestamp, i.e. the number of milliseconds that have elapsed since 00:00:00 UTC on 1 January 1970.",
                 "consumes": [
                     "application/json"
                 ],
@@ -43,81 +43,24 @@ var doc = `{
                 "tags": [
                     "Reference Data"
                 ],
-                "summary": "The endpoint returns current market status",
+                "summary": "Get Current Timestamp",
+                "operationId": "TimestampV1",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.MarketStatus"
-                        }
-                    }
-                }
-            }
-        },
-        "/v2/summary.json": {
-            "get": {
-                "description": "This endpoint allows users to get system status, Incidents and planned maintenance.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Reference Data"
-                ],
-                "summary": "Get system status",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Summary"
+                            "type": "integer"
                         }
                     }
                 }
             }
         }
     },
-    "definitions": {
-        "models.MarketStatus": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "affectedSymbols": {
-                            "type": "string"
-                        },
-                        "haltEndTime": {
-                            "type": "integer"
-                        },
-                        "haltReason": {
-                            "type": "integer"
-                        },
-                        "haltStartTime": {
-                            "type": "integer"
-                        },
-                        "marketStatus": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.Summary": {
-            "type": "object",
-            "properties": {
-                "status": {
-                    "type": "Status"
-                }
-            }
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "AccessKeyId",
+            "in": "path"
         }
     }
 }`
@@ -135,8 +78,8 @@ type swaggerInfo struct {
 var SwaggerInfo = swaggerInfo{
 	Version:     "0.1",
 	Host:        "api.testnet.huobi.pro",
-	BasePath:    "/api",
-	Schemes:     []string{},
+	BasePath:    "/",
+	Schemes:     []string{"https"},
 	Title:       "Huobi API",
 	Description: "Huobi API",
 }

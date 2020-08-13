@@ -1,3 +1,6 @@
+
+.EXPORT_ALL_VARIABLES:
+	GO_POST_PROCESS_FILE = "`which gofmt` -w"
 build:
 	@swag init -g api.go -d gin-swagger
 	@openapi-generator generate -i docs/swagger.yaml -g go  --package-name huobiapi
