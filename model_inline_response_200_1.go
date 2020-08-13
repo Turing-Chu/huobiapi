@@ -9,8 +9,8 @@
  */
 
 package huobiapi
-// InlineResponse200 struct for InlineResponse200
-type InlineResponse200 struct {
-	Data []string `json:"data,omitempty"`
+// InlineResponse2001 struct for InlineResponse2001
+type InlineResponse2001 struct {
+	Data ModelsCurrency `json:"data,omitempty"`
 	ModelsResponse ModelsResponse `json:"models.Response,omitempty"`
 }

@@ -9,6 +9,17 @@ import (
 	_ "huobiapi/models"
 )
 
+// Get all Supported Currencies
+// @summary Get all Supported Currencies
+// @description This endpoint returns all Huobi's supported trading currencies.
+// @id SupportCurrenciesV1
+// @tags Reference Data
+// @router /v1/common/currencys [GET]
+// @success 200 {object} models.Response{data=[]string} "supported currency"
+// @accept json
+// @produce json
+func SupportCurrency(ctx *gin.Context) {}
+
 // Get Currency & Chains
 // @summary Currency & Chains
 // @description API user could query static reference information for each currency, as well as its corresponding chain(s). (Public Endpoint)

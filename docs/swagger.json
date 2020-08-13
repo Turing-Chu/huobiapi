@@ -19,6 +19,45 @@
     "host": "api.testnet.huobi.pro",
     "basePath": "/",
     "paths": {
+        "/v1/common/currencys": {
+            "get": {
+                "description": "This endpoint returns all Huobi's supported trading currencies.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reference Data"
+                ],
+                "summary": "Get all Supported Currencies",
+                "operationId": "SupportCurrenciesV1",
+                "responses": {
+                    "200": {
+                        "description": "supported currency",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/v1/common/timestamp": {
             "get": {
                 "description": "This endpoint returns the current timestamp, i.e. the number of milliseconds that have elapsed since 00:00:00 UTC on 1 January 1970.",

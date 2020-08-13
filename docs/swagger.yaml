@@ -77,6 +77,29 @@ info:
   title: Huobi API
   version: "0.1"
 paths:
+  /v1/common/currencys:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint returns all Huobi's supported trading currencies.
+      operationId: SupportCurrenciesV1
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: supported currency
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.Response'
+            - properties:
+                data:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      summary: Get all Supported Currencies
+      tags:
+      - Reference Data
   /v1/common/timestamp:
     get:
       consumes:

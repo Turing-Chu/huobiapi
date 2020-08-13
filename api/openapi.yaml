@@ -12,6 +12,20 @@ info:
 servers:
 - url: https://api.testnet.huobi.pro/
 paths:
+  /v1/common/currencys:
+    get:
+      description: This endpoint returns all Huobi's supported trading currencies.
+      operationId: SupportCurrenciesV1
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+          description: supported currency
+      summary: Get all Supported Currencies
+      tags:
+      - Reference Data
   /v1/common/timestamp:
     get:
       description: This endpoint returns the current timestamp, i.e. the number of
@@ -50,7 +64,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/inline_response_200_1'
           description: Currency & Chains list
       summary: Currency & Chains
       tags:
@@ -128,6 +142,22 @@ components:
           type: string
       type: object
     inline_response_200:
+      example:
+        data:
+        - data
+        - data
+        models.Response:
+          code: 0
+          data: '{}'
+          message: message
+      properties:
+        data:
+          items:
+            type: string
+          type: array
+        models.Response:
+          $ref: '#/components/schemas/models.Response'
+    inline_response_200_1:
       example:
         data: '{}'
         models.Response:

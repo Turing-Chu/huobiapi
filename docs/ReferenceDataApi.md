@@ -5,13 +5,14 @@ All URIs are relative to *https://api.testnet.huobi.pro*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CurrencyAndChainsV2**](ReferenceDataApi.md#CurrencyAndChainsV2) | **Get** /v2/reference/currencies | Currency &amp; Chains
+[**SupportCurrenciesV1**](ReferenceDataApi.md#SupportCurrenciesV1) | **Get** /v1/common/currencys | Get all Supported Currencies
 [**TimestampV1**](ReferenceDataApi.md#TimestampV1) | **Get** /v1/common/timestamp | Get Current Timestamp
 
 
 
 ## CurrencyAndChainsV2
 
-> InlineResponse200 CurrencyAndChainsV2(ctx, currency, authorizedUser)
+> InlineResponse2001 CurrencyAndChainsV2(ctx, currency, authorizedUser)
 
 Currency & Chains
 
@@ -25,6 +26,36 @@ Name | Type | Description  | Notes
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
 **currency** | **string**| btc, ltc, etc ...(available currencies in Huobi Global) | 
 **authorizedUser** | **bool**| true or false (if not filled, default value is true) | 
+
+### Return type
+
+[**InlineResponse2001**](inline_response_200_1.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SupportCurrenciesV1
+
+> InlineResponse200 SupportCurrenciesV1(ctx, )
+
+Get all Supported Currencies
+
+This endpoint returns all Huobi's supported trading currencies.
+
+### Required Parameters
+
+This endpoint does not need any parameter.
 
 ### Return type
 
