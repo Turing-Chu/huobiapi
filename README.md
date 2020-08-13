@@ -34,6 +34,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *ReferenceDataApi* | [**CurrencyAndChainsV2**](docs/ReferenceDataApi.md#currencyandchainsv2) | **Get** /v2/reference/currencies | Currency &amp; Chains
 *ReferenceDataApi* | [**SupportCurrenciesV1**](docs/ReferenceDataApi.md#supportcurrenciesv1) | **Get** /v1/common/currencys | Get all Supported Currencies
+*ReferenceDataApi* | [**SupportedTradingSymbolV1**](docs/ReferenceDataApi.md#supportedtradingsymbolv1) | **Get** /v1/common/symbols | Get all Supported Trading Symbol
 *ReferenceDataApi* | [**TimestampV1**](docs/ReferenceDataApi.md#timestampv1) | **Get** /v1/common/timestamp | Get Current Timestamp
 
 
@@ -41,9 +42,12 @@ Class | Method | HTTP request | Description
 
  - [InlineResponse200](docs/InlineResponse200.md)
  - [InlineResponse2001](docs/InlineResponse2001.md)
+ - [InlineResponse2002](docs/InlineResponse2002.md)
  - [ModelsChain](docs/ModelsChain.md)
  - [ModelsCurrency](docs/ModelsCurrency.md)
  - [ModelsResponse](docs/ModelsResponse.md)
+ - [ModelsResponseV1](docs/ModelsResponseV1.md)
+ - [ModelsSymbol](docs/ModelsSymbol.md)
 
 
 ## Documentation For Authorization

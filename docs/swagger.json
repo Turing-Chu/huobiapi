@@ -58,6 +58,45 @@
                 }
             }
         },
+        "/v1/common/symbols": {
+            "get": {
+                "description": "This endpoint returns all Huobi's supported trading symbol.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reference Data"
+                ],
+                "summary": "Get all Supported Trading Symbol",
+                "operationId": "SupportedTradingSymbolV1",
+                "responses": {
+                    "200": {
+                        "description": "Supported Trading Symbol List",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.ResponseV1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/models.Symbol"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/v1/common/timestamp": {
             "get": {
                 "description": "This endpoint returns the current timestamp, i.e. the number of milliseconds that have elapsed since 00:00:00 UTC on 1 January 1970.",
@@ -245,6 +284,94 @@
                 },
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "models.ResponseV1": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Symbol": {
+            "type": "object",
+            "properties": {
+                "amount-precision": {
+                    "type": "integer"
+                },
+                "base-currency": {
+                    "type": "string"
+                },
+                "buy-market-max-order-value": {
+                    "type": "number"
+                },
+                "charge-time": {
+                    "type": "string"
+                },
+                "init-nav": {
+                    "type": "number"
+                },
+                "leverage_ratio": {
+                    "type": "number"
+                },
+                "limit-order-max-order-amt": {
+                    "type": "number"
+                },
+                "limit-order-min-order-amt": {
+                    "type": "number"
+                },
+                "max-order-amt": {
+                    "type": "number"
+                },
+                "max-order-value": {
+                    "type": "number"
+                },
+                "mgmt-fee-rate": {
+                    "type": "number"
+                },
+                "min-order-amt": {
+                    "type": "number"
+                },
+                "min-order-value": {
+                    "type": "number"
+                },
+                "price-precision": {
+                    "type": "integer"
+                },
+                "quote-currency": {
+                    "type": "string"
+                },
+                "rebal-threshold": {
+                    "type": "number"
+                },
+                "rebal-time": {
+                    "type": "string"
+                },
+                "sell-market-min-order-amt": {
+                    "type": "number"
+                },
+                "sell_market_max_order_amt": {
+                    "type": "number"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "symbol": {
+                    "type": "string"
+                },
+                "symbol-partition": {
+                    "type": "string"
+                },
+                "underlying": {
+                    "type": "string"
+                },
+                "value-precision": {
+                    "type": "integer"
                 }
             }
         }

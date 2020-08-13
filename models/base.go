@@ -9,3 +9,8 @@ type Response struct {
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
 }
+
+type ResponseV1 struct {
+	Status string      `json:"status"`
+	Data   interface{} `json:"data"`
+}

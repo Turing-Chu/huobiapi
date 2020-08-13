@@ -11,6 +11,6 @@
 package huobiapi
 // InlineResponse2001 struct for InlineResponse2001
 type InlineResponse2001 struct {
-	Data ModelsCurrency `json:"data,omitempty"`
-	ModelsResponse ModelsResponse `json:"models.Response,omitempty"`
+	Data []ModelsSymbol `json:"data,omitempty"`
+	ModelsResponseV1 ModelsResponseV1 `json:"models.ResponseV1,omitempty"`
 }

@@ -26,6 +26,20 @@ paths:
       summary: Get all Supported Currencies
       tags:
       - Reference Data
+  /v1/common/symbols:
+    get:
+      description: This endpoint returns all Huobi's supported trading symbol.
+      operationId: SupportedTradingSymbolV1
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+          description: Supported Trading Symbol List
+      summary: Get all Supported Trading Symbol
+      tags:
+      - Reference Data
   /v1/common/timestamp:
     get:
       description: This endpoint returns the current timestamp, i.e. the number of
@@ -64,7 +78,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/inline_response_200_2'
           description: Currency & Chains list
       summary: Currency & Chains
       tags:
@@ -141,6 +155,93 @@ components:
         message:
           type: string
       type: object
+    models.ResponseV1:
+      example:
+        data: '{}'
+        status: status
+      properties:
+        data:
+          properties: {}
+          type: object
+        status:
+          type: string
+      type: object
+    models.Symbol:
+      example:
+        charge-time: charge-time
+        min-order-value: 4.145608029883936
+        sell-market-min-order-amt: 1.0246457001441578
+        leverage_ratio: 5.962133916683182
+        symbol: symbol
+        symbol-partition: symbol-partition
+        value-precision: 6
+        limit-order-min-order-amt: 2.3021358869347655
+        min-order-amt: 2.027123023002322
+        buy-market-max-order-value: 6.027456183070403
+        init-nav: 1.4658129805029452
+        underlying: underlying
+        base-currency: base-currency
+        rebal-threshold: 1.2315135367772556
+        max-order-amt: 7.061401241503109
+        max-order-value: 9.301444243932576
+        limit-order-max-order-amt: 5.637376656633329
+        price-precision: 7
+        mgmt-fee-rate: 3.616076749251911
+        state: state
+        amount-precision: 0
+        sell_market_max_order_amt: 1.4894159098541704
+        quote-currency: quote-currency
+        rebal-time: rebal-time
+      properties:
+        amount-precision:
+          type: integer
+        base-currency:
+          type: string
+        buy-market-max-order-value:
+          type: number
+        charge-time:
+          type: string
+        init-nav:
+          type: number
+        leverage_ratio:
+          type: number
+        limit-order-max-order-amt:
+          type: number
+        limit-order-min-order-amt:
+          type: number
+        max-order-amt:
+          type: number
+        max-order-value:
+          type: number
+        mgmt-fee-rate:
+          type: number
+        min-order-amt:
+          type: number
+        min-order-value:
+          type: number
+        price-precision:
+          type: integer
+        quote-currency:
+          type: string
+        rebal-threshold:
+          type: number
+        rebal-time:
+          type: string
+        sell-market-min-order-amt:
+          type: number
+        sell_market_max_order_amt:
+          type: number
+        state:
+          type: string
+        symbol:
+          type: string
+        symbol-partition:
+          type: string
+        underlying:
+          type: string
+        value-precision:
+          type: integer
+      type: object
     inline_response_200:
       example:
         data:
@@ -158,6 +259,67 @@ components:
         models.Response:
           $ref: '#/components/schemas/models.Response'
     inline_response_200_1:
+      example:
+        data:
+        - charge-time: charge-time
+          min-order-value: 4.145608029883936
+          sell-market-min-order-amt: 1.0246457001441578
+          leverage_ratio: 5.962133916683182
+          symbol: symbol
+          symbol-partition: symbol-partition
+          value-precision: 6
+          limit-order-min-order-amt: 2.3021358869347655
+          min-order-amt: 2.027123023002322
+          buy-market-max-order-value: 6.027456183070403
+          init-nav: 1.4658129805029452
+          underlying: underlying
+          base-currency: base-currency
+          rebal-threshold: 1.2315135367772556
+          max-order-amt: 7.061401241503109
+          max-order-value: 9.301444243932576
+          limit-order-max-order-amt: 5.637376656633329
+          price-precision: 7
+          mgmt-fee-rate: 3.616076749251911
+          state: state
+          amount-precision: 0
+          sell_market_max_order_amt: 1.4894159098541704
+          quote-currency: quote-currency
+          rebal-time: rebal-time
+        - charge-time: charge-time
+          min-order-value: 4.145608029883936
+          sell-market-min-order-amt: 1.0246457001441578
+          leverage_ratio: 5.962133916683182
+          symbol: symbol
+          symbol-partition: symbol-partition
+          value-precision: 6
+          limit-order-min-order-amt: 2.3021358869347655
+          min-order-amt: 2.027123023002322
+          buy-market-max-order-value: 6.027456183070403
+          init-nav: 1.4658129805029452
+          underlying: underlying
+          base-currency: base-currency
+          rebal-threshold: 1.2315135367772556
+          max-order-amt: 7.061401241503109
+          max-order-value: 9.301444243932576
+          limit-order-max-order-amt: 5.637376656633329
+          price-precision: 7
+          mgmt-fee-rate: 3.616076749251911
+          state: state
+          amount-precision: 0
+          sell_market_max_order_amt: 1.4894159098541704
+          quote-currency: quote-currency
+          rebal-time: rebal-time
+        models.ResponseV1:
+          data: '{}'
+          status: status
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/models.Symbol'
+          type: array
+        models.ResponseV1:
+          $ref: '#/components/schemas/models.ResponseV1'
+    inline_response_200_2:
       example:
         data: '{}'
         models.Response:
